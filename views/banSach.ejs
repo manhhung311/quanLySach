@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+            <title>
+                Quản Lý Sách
+            </title>
+           
+            <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+            <link rel="stylesheet" type="text/css" href="/css/app.css">
+            <link rel="stylesheet" type="text/css" href="/css/buttons.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/colReorder.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/rowReorder.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/scroller.bootstrap4.css">
+            <link rel="stylesheet" type="text/css" href="/css/tables.css" />
+
+<!--hiệu ứng các nút -->
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/hover-min.css" />
+<link href="/css/transitions.css" rel="stylesheet" />
+<style type="text/css">
+    table, th, td{
+        border:1px solid #ccc;
+    }
+    table{
+        border-collapse:collapse;
+        width:100%;
+    }
+    th, td{
+        text-align:left;
+        padding:10px;
+    }
+    tr:hover{
+        background-color:#ddd;
+        cursor:pointer;
+    }
+</style>
+
+<style>
+#table1_filter {
+margin-bottom: 10px;
+}
+</style>
+    </head>
+    <body>
+        <%-include('./block/header')%>
+        <div class="wrapper">
+            <aside class="left-side sidebar-nav">
+                <section class="sidebar">
+                    <div class="page-sidebar">
+                        <h1 style="margin-top: 300px; margin-left: 50px; color: yellow;">Bán <br>Sách</h1>
+                    </div>
+                </section>
+            </aside>
+            <aside id="hello" class="right-side">
+                <%-include('./block/nhapKho2')%>
+                <!-- Notifications -->
+                <div id="notific">
+                </div>
+              
+                <div class="row">
+                    <div class="col-lg-12 my-3">
+                        <div class="card filterable">
+                            <div class="card-header bg-success text-white clearfix  ">
+                                <div class="float-left">
+                                    <div class="caption">
+                                        <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff"
+                                            data-hc="white"></i>
+                                        Bán Hàng
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <a class="btn btn-primary btn-sm hvr-wobble-vertical "
+                                        href="<%-link.url.banHang%>">Giao Dịch Mới</a> 
+                                    <a class="btn btn-primary btn-sm btn-large hvr-wobble-vertical" id="submit" data-toggle="modal"
+                                        data-href="#full-width" onclick="loadTable()" href="#full-width">Bán</a>
+                                </div>
+                            </div>
+                
+                            <div class="card-body table-responsive-lg table-responsive-sm table-responsive-md">
+                                <ul class="nav nav-tabs">
+                                    <li class=" nav-item ">
+                                        <a href="#tab_1" data-toggle="tab" class="nav-link active ">Phiếu Nhập</a>
+                                    </li>
+                                   
+                                </ul>
+                
+                                <div class="tab-content" id="slim2">
+                
+                                    <div class="tab-pane active" id="tab_1">
+                
+                                        <!--Danh sách bảng 1 -->
+                                        <table class="table table-striped table-bordered" id="table10" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th id="column"></th>
+                                                    <th>STT</th>
+                                                    <th>Mã Số Phiếu</th>
+                                                    <th>Tên Sản Phẩm</th>
+                                                    <th>Còn Lại</th>
+                                                    <th>Số Lượng</th>                            
+                                                    <th>Đơn Giá</th>
+                                                    <th>Thành Tiền</th>
+                                                    <th>Nhà Cung Cấp</th>
+                                                    <th>Địa Chỉ</th>
+                                                    <th>Họ Tên Người Lập</th>
+                                                    <th>Ngày Tạo</th>
+                                                    <th>Tổng Tiền</th>
+                                                   
+                                                </tr>
+                                                <!-- MaSoPhieu, NgayTao MaSPNhap -->
+                                            </thead>
+                                            <tbody id="nhap">
+                                            <%var stt = 1%>    
+                                            <%dauSach.data.forEach(sp=> {%>
+                                                <tr id="row[<%=stt%>]">
+                                                    <td id="check[<%=stt%>]">
+                                                        <label>
+                                                            <input class="checkbox1" type="checkbox" name="check[<%=stt%>]" >
+                                                            <input type="hidden" name="id[<%=stt%>]" id="id[<%=stt%>]" value="<%=sp.idSach%>" >
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <%=stt%>
+                                                    </td>
+                                                    <td>
+                                                        <%=sp.maSach%>
+                                                    </td>
+                                                    <td>
+                                                        <%=sp.tenSanPham%>
+                                                    </td>
+                                                    <td id="conLai[<%=stt%>]">
+                                                        <%=sp.soLuong%>
+                                                    </td>
+                                                    <td id="soLuongId[<%=stt%>]">
+                                                        <input type="number" onkeyup="tinhTien('<%=stt%>','<%=sp.giaBan%>')" name="soLuong[<%=stt%>]" id="soLuong[<%=stt%>]">
+                                                    </td>
+                                                    <td id="donGia[<%=stt%>]">
+                                                        <%=sp.giaBan%>
+                                                    </td>
+                                                    <td id="thanhTien[<%=stt%>]">
+                                                        <!-- tính giá tiền theo số lượng -->
+                                                    </td>
+                                                    <td>
+                                                        <%=sp.nhaCungCap%>
+                                                    </td>
+                                                    <td>
+                                                        <%=sp.diaChi%>
+                                                    </td>
+                                                    <td>
+                                                        <%=name%>
+                                                    </td>
+                                                    <td>
+                                                        <%= new Date()%>
+                                                    </td>
+                                                    <td hidden></td>
+                                                    
+                                                    
+                                                </tr>
+                                                <%stt++%>
+                                                <%})%>
+                                            </form>
+                                                <tr id="thanhTien">
+                                                    <td></td> <td></td><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+                                                    <td id="tongTien">Thành Tiền: </td>
+                                                </tr>
+                                            </tbody>
+                                        
+                                        </table>
+                
+                                    </div>
+                                    <!--End tab1-->
+                
+                                    
+                                   
+                                <!--End tab-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content -->
+            </aside>
+            <%-include('./block/xuLy')%>
+            <script>
+                var maxSTT = '<%=stt%>';
+                var html = ` <thead>
+                                                <tr>
+                                                    
+                                                    <th>STT</th>
+                                                    <th>Mã Số Phiếu</th>
+                                                    <th>Tên Sản Phẩm</th>
+                                                    <th>Số Lượng</th>                            
+                                                    <th>Đơn Giá</th>
+                                                    <th>Thành Tiền</th>
+                                                    <th>Nhà Cung Cấp</th>
+                                                    <th>Địa Chỉ</th>
+                                                    <th>Họ Tên Người Lập</th>
+                                                    <th>Ngày Tạo</th>
+                                                    <th>Tổng Tiền</th>
+                                                   
+                                                </tr>
+                
+                                                <!-- MaSoPhieu, NgayTao MaSPNhap -->
+                                            </thead>
+                                            <tbody id="nhap">
+    
+                                        `;
+                var editTable = (stt)=> {
+                    //html += document.getElementById("row["+stt+"]").innerHTML;
+
+                }
+                var idSachArr = [];
+                var soLuongArr = [];
+                var soLuongCu = [];
+                var tongTien = 0;
+                var loadTable = () => {
+                    let leng = maxSTT
+                    console.log(leng)
+                    for(let i = 1; i < leng; i++) {
+                        if(document.getElementsByName("check["+i+"]")[0].checked) {
+                            let donGia = document.getElementById("donGia["+i+"]").innerHTML;
+                            html+=`<tr id="row[<%=stt%>]">`
+                            let id = document.getElementById("id["+i+"]").value; 
+                            console.log( document.getElementById("row["+i+"]").innerHTML)
+                            var data = document.getElementById("row["+i+"]")
+                            var check = document.getElementById("check["+i+"]")
+                            let conLai = document.getElementById("conLai["+i+"]")
+                            soLuongCu.push(conLai.innerText)
+                            var soLuongNhap = document.getElementById("soLuongId["+i+"]")
+                            data.removeChild(check)
+                            data.removeChild(conLai);
+                            let soLuong = document.getElementById("soLuong["+i+"]").value;
+                            let childHTML = document.createElement("td");
+                            childHTML.innerHTML =  `<p> `+soLuong+`</p>`
+                            data.replaceChild(childHTML,soLuongNhap)
+                            console.log(document.getElementById("row["+i+"]"))
+                            html += document.getElementById("row["+i+"]").innerHTML
+                            console.log(html)
+                            html += `</tr>`
+                            idSachArr.push(id);
+                            soLuongArr.push(soLuong);
+                            tongTien = soLuong*donGia;
+                            document.getElementById("thanhTien").innerHTML= `<td></td> <td></td><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+                                                    <td id="tongTien">Thành Tiền: `+ tongTien+` </td>`
+                        }
+                    } 
+                    
+                    html += `<tr>
+                                                     <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+                                                    <td id="tongTien">Thành Tiền: `+tongTien+`</td>
+                                                </tr>`
+                }
+                var loadSoLuong = ()=> {
+                    let soLuong = document.getElementById("soLuong").value;
+                    console.log(soLuong)
+                    document.getElementById("inputSoLuong").innerHTML = soLuong.toString();
+                }
+
+                var tinhTien = (stt, donGia)=> {
+                    donGia = parseInt(donGia)
+                    let soLuong = document.getElementById("soLuong["+stt+"]").value;
+                    console.log(soLuong)
+                    soLuong = parseInt(soLuong);
+                    console.log(soLuong)
+                    let thanhT = soLuong*donGia;
+                    document.getElementById("thanhTien["+stt+"]").innerHTML ="<p>"+ thanhT +"</p>"
+                    console.log(document.getElementById("nhap"))
+                }
+                var loadData = ()=> {
+
+                    for (let i = 0; i < idSachArr.length; i++) {
+                            $.ajax({
+                            method:'POST',
+                            url: 'http://localhost:5000/banhang',
+                            data: {
+                                soLuong: soLuongArr[i],
+                                id: idSachArr[i],
+                                soLuongCu : soLuongCu[i]
+                            },
+                            success : function (result){
+                                console.log(result)
+                            }
+                        })   
+                    }
+                    k.destroy()
+                    
+                    console.log(html)
+                    $('#table10').html(html)
+                    
+                    table10 = $('#table10').DataTable({
+                        dom: '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+                        buttons: ['print'],
+                        "language": {
+                            "emptyTable": "Không có bản ghi phù hợp",
+                            "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+                            "search": "Tìm kiếm:",
+                            "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+                            "paginate": {
+                                "previous": "Trang trước",
+                                "next": "Trang sau"
+                            },
+                            "buttons": {
+                                "print": "in hóa đơn"
+                            }
+                        },
+                        "lengthMenu": [
+                            [-1],
+                            ["All"]
+                        ],
+
+
+    
+                    });
+                    document.getElementById("submit").hidden = true;
+                } 
+
+                let k = $('#table10').DataTable({
+                        dom: '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+                        buttons: [],
+                        "language": {
+                            "emptyTable": "Không có bản ghi phù hợp",
+                            "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+                            "search": "Tìm kiếm:",
+                            "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+                            "paginate": {
+                                "previous": "Trang trước",
+                                "next": "Trang sau"
+                            },
+                            "buttons": {
+                                "print": "in hóa đơn"
+                            }
+                        },
+                        "lengthMenu": [
+                            [-1],
+                            ["All"]
+                        ],
+
+
+    
+                    });
+            </script>
+    </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+            <title>
+                Quản Lý Sách
+            </title>
+           
+            <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+            <link rel="stylesheet" type="text/css" href="/css/app.css">
+            <link rel="stylesheet" type="text/css" href="/css/buttons.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/colReorder.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/rowReorder.bootstrap4.css" />
+            <link rel="stylesheet" type="text/css" href="/css/scroller.bootstrap4.css">
+            <link rel="stylesheet" type="text/css" href="/css/tables.css" />
+
+<!--hiệu ứng các nút -->
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/hover-min.css" />
+<link href="/css/transitions.css" rel="stylesheet" />
+<style type="text/css">
+    table, th, td{
+        border:1px solid #ccc;
+    }
+    table{
+        border-collapse:collapse;
+        width:100%;
+    }
+    th, td{
+        text-align:left;
+        padding:10px;
+    }
+    tr:hover{
+        background-color:#ddd;
+        cursor:pointer;
+    }
+    .block {
+        background-color: green;
+        float:left;
+        border: #ccc;
+        margin: 150px;
+        padding: 50px;
+        text-align: center;
+        font-size: 50px;
+    }
+    .block a {
+        color: red;
+    }
+</style>
+
+<style>
+#table1_filter {
+margin-bottom: 10px;
+}
+</style>
+    </head>
+    <body>
+        <%-include('./block/header')%>
+        <div class="wrapper">
+            <aside class="left-side sidebar-nav">
+                <section class="sidebar">
+                    <div class="page-sidebar">
+                      <h1 style="margin-top: 300px; margin-left: 50px; color: yellow;">Nhập <br>Sách</h1>
+                    </div>
+                </section>
+            </aside>
+            <aside id="hello" class="right-side">
+                
+               
+                <!-- Notifications -->
+                <div id="notific">
+                </div>
+                <div>
+                    <div class="block">
+                        <a href="loai">loại</a>
+                    </div>
+                    <div class="block">
+                        <a href="sach">sách</a>
+                    </div>
+                    <div class="block">
+                        <a href="phieunhap">Phiếu Nhập</a>
+                    </div>
+                    <div class="block">
+                        <a href="nhaxuatban">nhà xuất bản</a>
+                    </div>
+                </div>
+                <!-- Content -->
+            </aside>
+            <%-include('./block/xuLy')%>
+    </body>
+</html>

@@ -1,0 +1,231 @@
+<div class="row">
+    <div class="col-lg-12 my-3">
+        <div class="card filterable">
+            <div class="card-header bg-success text-white clearfix  ">
+                <div class="float-left">
+                    <div class="caption">
+                        <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff"
+                            data-hc="white"></i>
+                        Thống Kê
+                    </div>                    
+                </div>
+                <!--  -->
+            </div>
+
+            <div class="card-body table-responsive-lg table-responsive-sm table-responsive-md">
+                <%if(status.home) {%>
+                    <%if(status.delete) {%>
+                        <p>đã xóa</p>
+                    <%}else{%>
+                        <p>xóa lỗi</p>
+                    <%}%>
+                <%}%>
+                <ul class="nav nav-tabs">
+                    <li class=" nav-item ">
+                        <a href="#tab_1" data-toggle="tab" class="nav-link active ">Phiếu Nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tab_2" data-toggle="tab" class="nav-link">Đầu Sách</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tab_3" data-toggle="tab" class="nav-link">Hóa Đơn</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="slim2">
+
+                    <div class="tab-pane active" id="tab_1">
+
+                        
+                        <table class="table table-striped table-bordered" id="table1" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã Số Phiếu</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số Lượng</th>                            
+                                    <th>Đơn Giá</th>
+                                    <th>Thành Tiền</th>
+                                    <th>Nhà Cung Cấp</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Họ Tên Người Lập</th>
+                                    <th>Ngày Tạo</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+
+                                <!-- MaSoPhieu, NgayTao MaSPNhap -->
+                            </thead>
+                            <tbody id="nhap">
+                            <%var i = 0;%>
+                            <%phieuNhap.data.forEach(pn=> {%>
+                                <tr>
+                                    <td>
+                                        <%= ++i%>
+                                    </td>
+                                    <td>
+                                        <%=pn.ma_phieu_nhap%>
+                                    </td>
+                                    <td>
+                                        <%=pn.ten_sach%>
+                                    </td>
+                                    <td>
+                                        <%=pn.so_luong%>
+                                    </td>
+                                    <td>
+                                        <%=pn.don_gia%>
+                                    </td>
+                                    <td>
+                                        <%=pn.so_luong * pn.don_gia%>
+                                    </td>
+                                    <td>
+                                        <%=pn.ten_nxb%>
+                                    </td>
+                                    <td>
+                                        <%=pn.dia_chi%>
+                                    </td>
+                                    <td>
+                                        <%=pn.ten_tac_gia%>
+                                    </td>
+                                    <td>
+                                        <%=pn.ngay_nhap%>
+                                    </td>
+                                    <td>
+                                        <a href="<%-link.url.viewPhieuNhap%>/<%=pn.id%>"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="xem"></i></a>
+                                        <a href="<%-link.url.editPhieuNhap%>/<%=pn.id%>"<i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="sửa"></i></a>
+                                        <a href='<%-link.url.delPhieuNhap%>/<%=pn.id%>' data-id="" ><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="xóa"></i></a>
+                                    </td>
+                                    
+                                </tr>
+                                <%})%>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!--End tab1-->
+
+
+                    <div class="tab-pane" id="tab_2">
+                       <!--danh sách nhập kho-->
+                       <div class="btn-group" style="margin: 10px 0;">
+
+</div>
+<div class="float-right">
+<!-- <a id="danhsach" class="btn btn-raised btn-success btn-large"  href="<%-link.url.suaHoaChat%>">Sửa Xóa</a> -->
+</div id="nhapkho">
+<table class="table table-striped table-bordered" id="table6" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã Sách</th>
+                                    <th>Tên Sách</th>
+                                    <th>Chủng Loại</th>
+                                   
+                                    <th>Giá Bán</th>
+                                    <th>Tên Tác Giả</th>
+                                    <th>Thao Tác</th>                                   
+                                </tr>
+                            </thead>
+                            <tbody id="nhap2">
+                            <%var i = 0;%>
+                            <%dauSach.data.forEach(ds=> {%>
+                                    <tr>
+                                    <td>
+                                        <%= ++i%>
+                                    </td>
+                                    <td>
+                                        <%=ds.ma_sach%>
+                                    </td>
+                                    <td>
+                                        <%=ds.ten_sach%>
+                                    </td>
+                                    <td>
+                                        <%=ds.ten_loai%>
+                                    </td>
+                                   
+                                    <td>
+                                        <%=ds.gia_ban%>
+                                    </td>
+                                    <td>
+                                        <%=ds.ten_tac_gia%>
+                                    </td>
+                                    
+
+                                    <td>
+                                        <a href='<%=link.url.viewDauSach%>/<%=ds.id%>'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="xem"></i></a>
+                                        <a href='<%=link.url.editDauSach%>/<%=ds.id%>'><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="sửa"></i></a>
+                                        <a href='<%=link.url.delDauSach%>/<%=ds.id%>' data-id="" ><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="xóa"></i></a>
+                                    </td>
+                                    </tr>
+
+                            <%})%>
+                
+                
+                            </tbody>
+                        </table>
+                            
+                    </div>
+                    <!--End tab2-->
+
+                    <div class="tab-pane" id="tab_3">
+                       <!--danh sách tồn kho-->
+                            <!--Danh sách tồn kho bảng 3-->
+                            <table class="table table-striped table-bordered" id="table5" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã Hóa Đơn</th>
+                                        <th>Mã Sản Phẩm</th>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Ngày Lập</th>
+                                        <th>Số Lượng</th>
+                                        <th>Đơn Giá</th>
+                                        <th>Thành Tiền</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="nhap3">
+                                <%var i = 0;%>
+                                <%hoaDon.data.forEach(hd=> {%>
+                                    <tr>
+                                        <td>
+                                            <%= ++i%>
+                                        </td>
+                                        <td>
+                                            <%=hd.ma_hoa_don%>
+                                        </td>
+                                        <td>
+                                            <%=hd.ma_sach%>
+                                        </td>
+                                        <td>
+                                            <%=hd.ten_sach%>
+                                        </td>
+                                        <td>
+                                            <%=hd.ngay_lap%>
+                                        </td>
+                                        <td>
+                                            <%=hd.so_luong%>
+                                        </td>
+                                        <td>
+                                            <%=hd.gia_ban%>
+                                        </td>
+                                        <td>
+                                            <%=hd.gia_ban * hd.so_luong%>
+                                        </td>
+                                        <td>
+                                            <a href='<%=link.url.viewHoaDon%>/<%=hd.id%>'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="sửa"></i></a>
+                                        </td>
+                                    </tr>
+                                    <%})%>
+                                </tbody>
+                            </table>
+                    </div> 
+                    <!--End tab3-->
+
+                   
+                    <!--End tab4-->
+                </div>
+                <!--End tab-->
+            </div>
+        </div>
+    </div>
+</div>

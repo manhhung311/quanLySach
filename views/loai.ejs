@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>
+            Quản Lý Sách
+        </title>
+
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/css/app.css">
+        <link rel="stylesheet" type="text/css" href="/css/buttons.bootstrap4.css" />
+        <link rel="stylesheet" type="text/css" href="/css/colReorder.bootstrap4.css" />
+        <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap4.css" />
+        <link rel="stylesheet" type="text/css" href="/css/rowReorder.bootstrap4.css" />
+        <link rel="stylesheet" type="text/css" href="/css/scroller.bootstrap4.css">
+        <link rel="stylesheet" type="text/css" href="/css/tables.css" />
+
+        <!--hiệu ứng các nút -->
+        <link rel="stylesheet" href="/css/animate.min.css" />
+        <link rel="stylesheet" href="/css/hover-min.css" />
+        <link href="/css/transitions.css" rel="stylesheet" />
+        <style type="text/css">
+            table,
+            th,
+            td {
+                border: 1px solid #ccc;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th,
+            td {
+                text-align: left;
+                padding: 10px;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+                cursor: pointer;
+            }
+        </style>
+
+        <style>
+            #table1_filter {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+
+<body>
+    <%-include('./block/header')%>
+        <div class="wrapper">
+            <aside class="left-side sidebar-nav">
+                <section class="sidebar">
+                    <div class="page-sidebar">
+                        <h1 style="margin-top: 300px; margin-left: 50px; color: yellow;">Nhập <br>Sách</h1>
+                    </div>
+                </section>
+            </aside>
+            <aside id="hello" class="right-side">
+
+
+                <!-- Notifications -->
+                <div id="notific">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col" id="formLoai">
+                            <!-- <div class="col-8"> -->
+                            <form method="post" action="<%=link.form.loai%>" class="row g-3 mx-auto">
+                                <div class="row-md-1">
+                                    <label for="validationDefault01" class="form-label">tên loại</label>
+                                    <input type="text" id="loai" class="form-control" name="tenLoai" id="validationDefault01"
+                                        value="" required>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="button">
+                                        <a href="/hello" style="color:white;">Quay Lại</a>
+                                    </button>
+                                    <button class="btn btn-primary" type="submit">Lưu</button>
+                                </div>
+                            </form>
+                            <button style="margin-left: 50%;" class="btn btn-primary" onclick="reset()">tạo mới</button>
+                        </div>
+                        <div class="col">
+                            <ol class="list-group list-group-numbered">
+                                <%loai.forEach(l=> {%>
+                                    <li onclick="editLoai('<%=l.id%>', '<%=l.ten_loai%>')" class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">
+                                                <%=l.ten_loai%>
+                                            </div>
+
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"></span>
+                                    </li>
+                                    <%})%>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- Content -->
+            </aside>
+            <%-include('./block/xuLy')%>
+            <script>
+                var editLoai = (id, tenLoai)=> {
+                    console.log(id)
+                    //document.getElementById('loai').value = tenLoai
+                    document.getElementById('formLoai').innerHTML = `
+                            <form method="post" action="<%=link.form.loai%>/edit/` +id+`" class="row g-3 mx-auto">
+                                <div class="row-md-1">
+                                    <label for="validationDefault01" class="form-label">edit ` +tenLoai+`</label>
+                                    <input type="text" id="loai" class="form-control" name="tenLoai" id="validationDefault01"
+                                        value="`+tenLoai+`" required>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="button">
+                                        <a href="/hello" style="color:white;">Quay Lại</a>
+                                    </button>
+                                    <button class="btn btn-primary" type="submit">Lưu</button>
+                                </div>
+                            </form>
+                            <br>
+                            <div class="row g-3 mx-auto">
+                                <div class="col-2"></div>
+                            <div class="col-4">
+                                <button class="btn btn-primary" onclick="reset()">tạo mới</button>    
+                            </div>
+
+                                 <div class="col-6">   
+                            
+                           
+                            <form method="post" action="<%=link.form.loai%>/delete/` +id+`">
+                                
+                                    <button class="btn btn-primary" type="submit">Xóa</button>
+                               
+                            </form> </div> </div>`
+                }
+
+                var reset = ()=> {
+                    document.getElementById('formLoai').innerHTML = `
+                            <form method="post" action="<%=link.form.loai%>" class="row g-3 mx-auto">
+                                <div class="row-md-1">
+                                    <label for="validationDefault01" class="form-label">tên loại</label>
+                                    <input type="text" id="loai" class="form-control" name="tenLoai" id="validationDefault01"
+                                        value="" required>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="button">
+                                        <a href="/hello" style="color:white;">Quay Lại</a>
+                                    </button>
+                                    <button class="btn btn-primary" type="submit">Lưu</button>
+                                    
+                                </div>
+                            </form>
+                            <button style="margin-left: 50%;" class="btn btn-primary" onclick="reset()">tạo mới</button>`
+                }
+            </script>
+</body>
+
+</html>

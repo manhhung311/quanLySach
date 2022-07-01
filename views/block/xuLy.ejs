@@ -1,0 +1,338 @@
+<style type="text/css">
+    table, th, td{
+        border:1px solid #ccc;
+    }
+    table{
+        border-collapse:collapse;
+        width:100%;
+    }
+    th, td{
+        text-align:left;
+        padding:10px;
+    }
+    tr:hover{
+        background-color:#ddd;
+        cursor:pointer;
+    }
+</style>
+
+<style>
+#table1_filter {
+margin-bottom: 10px;
+}
+</style>
+<script type="text/javascript" src="js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/js/jquery.jeditable.js"></script>
+<script type="text/javascript" src="/js/dataTables.bootstrap4.js"></script>
+<script type="text/javascript" src="/js/dataTables.buttons.js"></script>
+<script type="text/javascript" src="/js/dataTables.colReorder.js"></script>
+<script type="text/javascript" src="/js/dataTables.responsive.js"></script>
+<script type="text/javascript" src="/js/dataTables.rowReorder.js"></script>
+<script type="text/javascript" src="/js/buttons.colVis.js"></script>
+<script type="text/javascript" src="/js/buttons.html5.js"></script>
+<script type="text/javascript" src="/js/buttons.print.js"></script>
+<script type="text/javascript" src="/js/buttons.bootstrap4.js"></script>
+<script type="text/javascript" src="/js/pdfmake.js"></script>
+<script type="text/javascript" src="/js/vfs_fonts.js"></script>
+<script type="text/javascript" src="/js/dataTables.scroller.js"></script>
+<script type="text/javascript" src="/js/dataTables.scroller.js"></script>           
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+//table tools example
+$('#table1').DataTable({
+    dom:
+        '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+    "language": {
+        "emptyTable": "Không có bản ghi phù hợp",
+        "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+        "search": "Tìm kiếm:",
+        "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+        "paginate": {
+            "previous": "Trang trước",
+            "next": "Trang sau"
+        }
+    },
+    "lengthMenu": [
+        [5, 10, 20, -1],
+        [5, 10, 20, "All"]
+    ],
+});
+
+//re-order columns
+var table2 = $('#table2').dataTable(
+    {
+        "language": {
+            "emptyTable": "Không có bản ghi phù hợp",
+            "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+            "search": "Tìm kiếm:",
+            "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+            "paginate": {
+                "previous": "Trang trước",
+                "next": "Trang sau"
+            }
+        },
+        "lengthMenu": [
+            [-1],
+            ["All"]
+        ],
+    }
+);
+// var table10 = $('#table10').dataTable(
+//     {
+//         dom:
+//             '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+//         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+//         "language": {
+//             "emptyTable": "Không có bản ghi phù hợp",
+//             "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+//             "search": "Tìm kiếm:",
+//             "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+//             "paginate": {
+//                 "previous": "Trang trước",
+//                 "next": "Trang sau"
+//             }
+//         },
+//         "lengthMenu": [
+//             [-1],
+//             ["All"]
+//         ]
+//     }
+// );
+
+
+
+// add row, delete row example
+var table3 = $('#table3').DataTable({
+    order: [[0, 'desc']],
+    responsive: true,
+    "language": {
+        "emptyTable": "Không có bản ghi phù hợp",
+        "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+        "search": "Tìm kiếm:",
+        "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+        "paginate": {
+            "previous": "Trang trước",
+            "next": "Trang sau"
+        }
+    },
+    "lengthMenu": [
+        [3, 10, 20, -1],
+        [3, 10, 20, "All"]
+    ],
+});
+//total number of existing rows
+var counter = 18;
+
+
+//row addition code
+$('#addButton').on('click', function() {
+    table3.row
+        .add([
+            counter,
+            counter + ' new',
+            counter + ' user',
+            counter + '_unique_user',
+            counter + '_unique_user@domain.com',
+        ])
+        .draw();
+
+    counter++;
+});
+
+//row deletion code
+
+$('#table3 tbody').on('click', 'tr', function() {
+    if ($(this).hasClass('danger')) {
+        $(this).removeClass('danger');
+    } else {
+        table3.$('tr.danger').removeClass('danger');
+        $(this).addClass('danger');
+    }
+});
+
+$('#delButton').click(function() {
+    if (!$('#table3 tr').hasClass('danger')) {
+        alert('please select a row first');
+        //exit;
+    }
+    table3
+        .row('.danger')
+        .remove()
+        .draw(false);
+});
+});
+$('#sample_5').dataTable({
+scrollY: '200px',
+dom: 'frtiS',
+deferRender: true,
+responsive: true,
+});
+$(document).ready(function() {
+var oTable;
+/* Apply the jEditable handlers to the table */
+$('#inline_edit tbody td').editable(
+    function(sValue) {
+        /* Get the position of the current data from the node */
+        var aPos = oTable.fnGetPosition(this);
+
+        /* Get the data array for this row */
+        var aData = oTable.fnGetData(aPos[0]);
+
+        /* Update the data array and return the value */
+        aData[aPos[1]] = sValue;
+        return sValue;
+    },
+    { onblur: 'submit' }
+);
+/* Submit the form when bluring a field */
+
+/* Init DataTables */
+oTable = $('#inline_edit').dataTable();
+});
+</script>
+
+<!--All checkbox-->
+<script type="text/javascript">
+$(document).ready(function() {
+
+$('#selecctall').click(function(event) { //on click
+    if (this.checked) { // check select status
+        $('.checkbox1').each(function() { //loop through each checkbox
+            this.checked = true; //select all checkboxes with class "checkbox1"            
+        });
+
+    } else {
+        $('.checkbox1').each(function() { //loop through each checkbox
+            this.checked =
+                false; //deselect all checkboxes with class "checkbox1"                    
+        });
+    }
+});
+
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+//table tools example
+$('#table6').DataTable({
+    dom: '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+    "language": {
+        "emptyTable": "Không có bản ghi phù hợp",
+        "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+        "search": "Tìm kiếm:",
+        "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+        "paginate": {
+            "previous": "Trang trước",
+            "next": "Trang sau"
+        }
+    },
+    "lengthMenu": [
+        [5, 10, 20, -1],
+        [5, 10, 20, "All"]
+    ],
+    
+});
+$('#table5').DataTable({
+    dom: '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+    "language": {
+        "emptyTable": "Không có bản ghi phù hợp",
+        "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+        "search": "Tìm kiếm:",
+        "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+        "paginate": {
+            "previous": "Trang trước",
+            "next": "Trang sau"
+        }
+    },
+    "lengthMenu": [
+        [5, 10, 20, -1],
+        [5, 10, 20, "All"]
+    ],
+});
+
+
+
+$('#table4').DataTable({
+    dom: '<"m-t-10"B><"m-t-10 pull-left"f><"m-t-10 pull-right"l>rt<"pull-left m-t-10"i><"m-t-10 pull-right"p>',
+    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+    "language": {
+        "emptyTable": "Không có bản ghi phù hợp",
+        "sLengthMenu": "Hiển thị _MENU_ bản ghi",
+        "search": "Tìm kiếm:",
+        "info": "Đang hiển thị trang _START_ của _END_ trong số _TOTAL_ mục",
+        "paginate": {
+            "previous": "Trang trước",
+            "next": "Trang sau"
+        }
+    },
+    "lengthMenu": [
+        [5, 10, 20, -1],
+        [5, 10, 20, "All"]
+    ],
+    pageOrientation: 'portrait',
+        content: [
+        {text: 'Text on Portrait'},
+        {text: 'Text on Landscape', pageOrientation: 'landscape', pageBreak: 'before'},
+        {text: 'Text on Landscape 2', pageOrientation: 'portrait', pageBreak: 'after'},
+        {text: 'Text on Portrait 2'},
+        ]
+});
+
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+var oTable;
+/* Apply the jEditable handlers to the table */
+$('#inline_edit tbody td').editable(
+    function(sValue) {
+        /* Get the position of the current data from the node */
+        var aPos = oTable.fnGetPosition(this);
+
+        /* Get the data array for this row */
+        var aData = oTable.fnGetData(aPos[0]);
+
+        /* Update the data array and return the value */
+        aData[aPos[1]] = sValue;
+        return sValue;
+    }, {
+        onblur: 'submit'
+    }
+);
+/* Submit the form when bluring a field */
+
+/* Init DataTables */
+oTable = $('#inline_edit').dataTable();
+});
+</script>
+
+<!--Format số hàng nghìn có thêm dấu-->
+<script type="text/javascript">
+(function($) {
+$.fn.simpleMoneyFormat = function() {
+    this.each(function(index, el) {
+        var value = null;
+        //get value
+        if ($(el).is('input') || $(el).is('textarea')) {
+            value = $(el).val();
+        } else {
+            value = $(el).text();
+        }
+        // format value
+        let result = parseInt(value).toLocaleString();
+        $(el).empty().text(result);
+    });
+};
+}(jQuery));
+</script>
+
+<script type="text/javascript">
+$('.money').simpleMoneyFormat();
+</script>
